@@ -26,6 +26,24 @@ namespace NotificationService.Controllers
 
         }
 
+ [ActionName("deleteNotification")]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+
+            var projectToDelete = db.Notifications.SingleOrDefault(x => x.NotificationsId == id);
+
+            if (projectToDelete == null)
+            {
+                return NotFound("No record found");
+            }
+
+            db.Notifications.Remove(projectToDelete);
+            db.SaveChanges();
+
+            return Ok();
+
+        }
         // GET: api/<NotificationController>
         [ActionName("getAllNotifications")]
         [HttpGet]
